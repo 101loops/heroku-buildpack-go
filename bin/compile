@@ -141,12 +141,12 @@ ls -la
 # Move the binaries so we can use them
 #--------------------------------------------------------------------
 
-mkdir -p $build/bin
-mv $go_dir/* $build/bin
+#mkdir -p $build/bin
+#mv $go_dir/* $build/bin
 #rm -rf $build/.heroku
 
-echo $(pwd)
-ls -la
+#echo $(pwd)
+#ls -la
 
 mkdir -p $build/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
