@@ -128,6 +128,8 @@ unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
 echo "-----> Running: go get -tags heroku ./..."
 cd $go_dir
+echo $(pwd)
+ls -la
 go get -tags heroku ./...
 
 echo $(pwd)
