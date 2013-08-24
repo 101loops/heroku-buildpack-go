@@ -13,18 +13,18 @@ ls -la
 #--------------------------------------------------------------------
 
 mkdir -p "$1" "$2"
-build=$(cd "$1/" && pwd)
-cache=$(cd "$2/" && pwd)
-buildpack=$(dirname $(dirname $0))
+BUILD=$(cd "$1/" && pwd)
+CACHE=$(cd "$2/" && pwd)
+$BUILD_PACK=$(dirname $(dirname $0))
 
 # Go
-ver=${GO_VERSION:-1.1.2}
-file=${GO_FILE:-go$ver.$(uname|tr A-Z a-z)-amd64.tar.gz}
-url=${GO_URL:-http://go.googlecode.com/files/$file}
+GO_VERSION=${GO_VERSION:-1.1.2}
+GO_FILE=${GO_FILE:-go$GO_VERSION.$(uname|tr A-Z a-z)-amd64.tar.gz}
+GO_URL=${GO_URL:-http://go.googlecode.com/files/$GO_FILE}
 
 # Python
-venv=$cache/venv				# Virtualenv cache
-mkdir -p $cache/pip			# pip cache
+venv=$CACHE/venv				# Virtualenv cache
+mkdir -p $CACHE/pip			# pip cache
 python=python2.7				# The Python we use for Go dependencies
 PATH=$venv/bin:$PATH
 
@@ -34,10 +34,10 @@ PATH=$venv/bin:$PATH
 #--------------------------------------------------------------------
 
 virtualenv() {
-    python "$buildpack/vendor/virtualenv-1.7/virtualenv.py" "$@"
+    python "$$BUILD_PACK/vendor/virtualenv-1.7/virtualenv.py" "$@"
 }
 
-if test -e $build/bin && ! test -d $build/bin
+if test -e $BUILD/bin && ! test -d $BUILD/bin
 then
     echo >&2 " !     File bin exists and is not a directory."
     exit 1
@@ -48,17 +48,17 @@ fi
 # Install (or use cached) Go
 #--------------------------------------------------------------------
 
-if test -d $cache/go-$ver/go
+if test -d $CACHE/go-$ver/go
 then
     echo "-----> Using Go $ver"
 else
-    rm -rf $cache/* # be sure not to build up cruft
-    mkdir -p $cache/go-$ver
-    cd $cache/go-$ver
+    rm -rf $CACHE/* # be sure not to build up cruft
+    mkdir -p $CACHE/go-$ver
+    cd $CACHE/go-$ver
     echo -n "-----> Installing Go $ver..."
-    curl -sO $url
-    tar zxf $file
-    rm -f $file
+    curl -sO $GO_URL
+    tar zxf $GO_FILE
+    rm -f $GO_FILE
     echo " done"
 fi
 
@@ -67,13 +67,12 @@ fi
 # Configure Go
 #--------------------------------------------------------------------
 
-GOROOT=$cache/go-$ver/go
+GOROOT=$CACHE/go-$ver/go
 export GOROOT
 
 echo $GOROOT
 
-DIR=$build
-GO_PATH="${GO_PATH:-\$build}"
+GO_PATH="${GO_PATH:-\$BUILD}"
 echo $GO_PATH
 eval GOPATH=$GO_PATH
 echo $GOPATH
@@ -113,12 +112,12 @@ echo $(pwd)
 ls -la
 
 # optional: move source to named directory path
-go_dir=$build
-#go_dir_name=$(GO_DIR)
-#if [ -n "$go_dir_name" ]
-#	go_dir=go_dir/src/$go_dir_name
-#	mkdir -p $go_dir
-#	cp -R $build/* $go_dir
+GO_DIR=$BUILD
+#GO_DIR_NAME=$(GO_DIR)
+#if [ -n "$GO_DIR_name" ]
+#	GO_DIR=GO_DIR/src/GO_DIR_NAME
+#	mkdir -p $GO_DIR
+#	cp -R $BUILD/* $GO_DIR
 #fi
 
 echo $(pwd)
@@ -132,7 +131,7 @@ ls -la
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
 echo "-----> Running: go get -tags heroku ./..."
-cd $go_dir
+cd $GO_DIR
 echo $(pwd)
 ls -la
 go get -tags heroku ./...
@@ -145,15 +144,15 @@ ls -la
 # Move the binaries so we can use them
 #--------------------------------------------------------------------
 
-#mkdir -p $build/bin
-#mv $go_dir/* $build/bin
-#rm -rf $build/.heroku
+#mkdir -p $BUILD/bin
+#mv $GO_DIR/* $BUILD/bin
+#rm -rf $BUILD/.heroku
 
 #echo $(pwd)
 #ls -la
 
-mkdir -p $build/.profile.d
-echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
+mkdir -p $BUILD/.profile.d
+echo 'PATH=$PATH:$HOME/bin' > $BUILD/.profile.d/go.sh
 
 echo $(pwd)
 ls -la
