@@ -19,8 +19,8 @@ BUILDPACK=$(dirname $(dirname $0))
 
 # Go
 GO_VERSION=${GO_VERSION:-1.1.2}
-GO_FILE=${GO_FILE:-go$GO_VERSION.$(uname|tr A-Z a-z)-amd64.tar.gz}
-GO_URL=${GO_URL:-http://go.googlecode.com/files/$GO_FILE}
+GO_FILE=${GO_FILE:-go$(GO_VERSION).$(uname|tr A-Z a-z)-amd64.tar.gz}
+GO_URL=${GO_URL:-http://go.googlecode.com/files/$(GO_FILE)}
 
 # Python
 venv=$CACHE/venv				# Virtualenv cache
