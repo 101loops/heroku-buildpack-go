@@ -2,24 +2,34 @@
 
 This is a [Heroku buildpack][buildpack] for [Go][go].
 
-## Getting Started
 
-Follow the guide at
-<http://mmcgrana.github.com/2012/09/getting-started-with-go-on-heroku.html>.
+## Preparation
 
-There's also a hello world sample app at
-<https://github.com/kr/go-heroku-example>.
+This buildpack currently depends on the [user env compile](https://devcenter.heroku.com/articles/labs-user-env-compile) labs addon.  To enable run:
+
+    heroku labs:enable user-env-compile
+
+
+## Configuration (optional)
+
+Set `GO_VERSION` to set a custom Go version:
+
+    heroku config:set GO_VERSION=`1.1.2`
+
+Set `GO_PATH` to define a custom GOPATH:
+
+    heroku config:set GO_PATH=`...`
+
 
 ## Example
 
 ```
 $ ls -A1
 ./.git
-./.godir
 ./Procfile
 ./web.go
 
-$ heroku create -b https://github.com/kr/heroku-buildpack-go.git
+$ heroku create -b https://github.com/101loops/heroku-buildpack-go.git
 ...
 
 $ git push heroku master
@@ -44,6 +54,7 @@ contains a `.go` file.
 The buildpack adds a `heroku` [build constraint][build-constraint],
 to enable heroku-specific code. See the [App Engine build constraints article][app-engine-build-constraints]
 for more.
+
 
 ## Hacking on this Buildpack
 

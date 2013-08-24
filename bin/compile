@@ -1,38 +1,50 @@
 #!/bin/bash
 # usage: bin/compile <build-dir> <cache-dir>
 
+# fail fast
 set -eo pipefail
+
+ls -la
+
+#--------------------------------------------------------------------
+# Variables for use later
+#--------------------------------------------------------------------
 
 mkdir -p "$1" "$2"
 build=$(cd "$1/" && pwd)
 cache=$(cd "$2/" && pwd)
-ver=${GOVERSION:-1.1.2}
-file=${GOFILE:-go$ver.$(uname|tr A-Z a-z)-amd64.tar.gz}
-url=${GOURL:-http://go.googlecode.com/files/$file}
 buildpack=$(dirname $(dirname $0))
 
+# Go
+ver=${GO_VERSION:-1.1.2}
+file=${GO_FILE:-go$ver.$(uname|tr A-Z a-z)-amd64.tar.gz}
+url=${GO_URL:-http://go.googlecode.com/files/$file}
+
 # Python
-venv=$cache/venv
-mkdir -p $cache/pip
-python=python2.7
+venv=$cache/venv				# Virtualenv cache
+mkdir -p $cache/pip			# pip cache
+python=python2.7				# The Python we use for Go dependencies
 PATH=$venv/bin:$PATH
+
+
+#--------------------------------------------------------------------
+# Virtualenv for Go dependencies
+#--------------------------------------------------------------------
 
 virtualenv() {
     python "$buildpack/vendor/virtualenv-1.7/virtualenv.py" "$@"
 }
-
-if ! test -f $build/.godir
-then
-    echo >&2 " !     A .godir is required. For instructions:"
-    echo >&2 " !     http://mmcgrana.github.io/2012/09/getting-started-with-go-on-heroku"
-    exit 1
-fi
 
 if test -e $build/bin && ! test -d $build/bin
 then
     echo >&2 " !     File bin exists and is not a directory."
     exit 1
 fi
+
+
+#--------------------------------------------------------------------
+# Install (or use cached) Go
+#--------------------------------------------------------------------
 
 if test -d $cache/go-$ver/go
 then
@@ -48,10 +60,25 @@ else
     echo " done"
 fi
 
-GOROOT=$cache/go-$ver/go export GOROOT
-GOPATH=$build/.heroku/g export GOPATH
+
+#--------------------------------------------------------------------
+# Configure Go
+#--------------------------------------------------------------------
+
+GOROOT=$cache/go-$ver/go
+export GOROOT
+
+GOPATH=${GO_PATH:-$build/.heroku/g}
+export GOPATH
+
 PATH=$GOROOT/bin:$PATH
 
+ls -la
+
+
+#--------------------------------------------------------------------
+# Dependencies for Go
+#--------------------------------------------------------------------
 
 if ! (which hg > /dev/null && which bzr > /dev/null)
 then
@@ -69,19 +96,44 @@ then
     echo " done"
 fi
 
-name=$(cat $build/.godir)
-p=$GOPATH/src/$name
-mkdir -p $p
-cp -R $build/* $p
+ls -la
 
-unset GIT_DIR # unset git dir or it will mess with goinstall
+# optional: move source to named directory path
+go_dir=$build
+#go_dir_name=$(GO_DIR)
+#if [ -n "$go_dir_name" ]
+#	go_dir=go_dir/src/$go_dir_name
+#	mkdir -p $go_dir
+#	cp -R $build/* $go_dir
+#fi
+
+ls -la
+
+
+#--------------------------------------------------------------------
+# Compile!
+#--------------------------------------------------------------------
+
+unset GIT_DIR 	# unset git dir or it will mess with goinstall
+
 echo "-----> Running: go get -tags heroku ./..."
-cd $p
+cd $go_dir
 go get -tags heroku ./...
 
+ls -la
+
+
+#--------------------------------------------------------------------
+# Move the binaries so we can use them
+#--------------------------------------------------------------------
+
 mkdir -p $build/bin
-mv $GOPATH/bin/* $build/bin
-rm -rf $build/.heroku
+mv $go_dir/* $build/bin
+#rm -rf $build/.heroku
+
+ls -la
 
 mkdir -p $build/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
+
+ls -la
