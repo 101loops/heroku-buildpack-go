@@ -72,7 +72,11 @@ export GOROOT
 
 echo $GOROOT
 
-GOPATH=${GO_PATH:-$build}
+DIR=$build
+echo $GO_PATH
+GO_PATH="${GO_PATH:-\$build}"
+echo $GO_PATH
+GOPATH=$(GO_PATH)
 export GOPATH
 
 echo $GOPATH
