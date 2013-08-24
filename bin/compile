@@ -19,13 +19,13 @@ BUILDPACK=$(dirname $(dirname $0))
 
 # Go
 GO_VERSION=${GO_VERSION:-1.1.2}
-GO_FILE=${GO_FILE:-go$(GO_VERSION).$(uname|tr A-Z a-z)-amd64.tar.gz}
-GO_URL=${GO_URL:-http://go.googlecode.com/files/$(GO_FILE)}
+GO_FILE=${GO_FILE:-go${GO_VERSION}.$(uname|tr A-Z a-z)-amd64.tar.gz}
+GO_URL=${GO_URL:-http://go.googlecode.com/files/${GO_FILE}}
 
 # Python
-venv=$CACHE/venv				# Virtualenv cache
+venv=$CACHE/venv				# virtualenv cache
 mkdir -p $CACHE/pip			# pip cache
-python=python2.7				# The Python we use for Go dependencies
+python=python2.7				# Python used for Go dependencies
 PATH=$venv/bin:$PATH
 
 
@@ -34,7 +34,7 @@ PATH=$venv/bin:$PATH
 #--------------------------------------------------------------------
 
 virtualenv() {
-    python "$$BUILDPACK/vendor/virtualenv-1.7/virtualenv.py" "$@"
+    python "$BUILDPACK/vendor/virtualenv-1.7/virtualenv.py" "$@"
 }
 
 if test -e $BUILD/bin && ! test -d $BUILD/bin
@@ -48,17 +48,17 @@ fi
 # Install (or use cached) Go
 #--------------------------------------------------------------------
 
-if test -d $CACHE/go-$ver/go
+if test -d $CACHE/go-${GO_VERSION}/go
 then
-    echo "-----> Using Go $ver"
+    echo "-----> Using Go ${GO_VERSION}"
 else
     rm -rf $CACHE/* # be sure not to build up cruft
-    mkdir -p $CACHE/go-$ver
-    cd $CACHE/go-$ver
+    mkdir -p $CACHE/go-${GO_VERSION}
+    cd $CACHE/go-${GO_VERSION}
     echo -n "-----> Installing Go $ver..."
-    curl -sO $GO_URL
-    tar zxf $GO_FILE
-    rm -f $GO_FILE
+    curl -sO ${GO_URL}
+    tar zxf ${GO_FILE}
+    rm -f ${GO_FILE}
     echo " done"
 fi
 
