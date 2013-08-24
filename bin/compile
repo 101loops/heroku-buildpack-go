@@ -75,7 +75,7 @@ echo $GOROOT
 DIR=$build
 GO_PATH="${GO_PATH:-\$build}"
 echo $GO_PATH
-GOPATH=$(GO_PATH)
+GOPATH="$GO_PATH"
 export GOPATH
 
 echo $GOPATH
