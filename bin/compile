@@ -55,7 +55,7 @@ else
     rm -rf $CACHE/* # be sure not to build up cruft
     mkdir -p $CACHE/go-${GO_VERSION}
     cd $CACHE/go-${GO_VERSION}
-    echo -n "-----> Installing Go $ver..."
+    echo -n "-----> Installing Go ${GO_VERSION}..."
     curl -sO ${GO_URL}
     tar zxf ${GO_FILE}
     rm -f ${GO_FILE}
@@ -67,7 +67,7 @@ fi
 # Configure Go
 #--------------------------------------------------------------------
 
-GOROOT=$CACHE/go-$ver/go
+GOROOT=$CACHE/go-${GO_VERSION}/go
 export GOROOT
 
 echo $GOROOT
