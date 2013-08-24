@@ -134,7 +134,7 @@ echo "-----> Running: go get -tags heroku ./..."
 cd $GO_DIR
 echo $(pwd)
 ls -la
-go get -tags heroku ./...
+$GOROOT/go get -tags heroku ./...
 
 echo $(pwd)
 ls -la
