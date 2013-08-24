@@ -4,6 +4,7 @@
 # fail fast
 set -eo pipefail
 
+echo $(pwd)
 ls -la
 
 #--------------------------------------------------------------------
@@ -68,11 +69,18 @@ fi
 GOROOT=$cache/go-$ver/go
 export GOROOT
 
+echo $GOROOT
+
 GOPATH=${GO_PATH:-$build/.heroku/g}
 export GOPATH
 
+echo $GOPATH
+
 PATH=$GOROOT/bin:$PATH
 
+echo $PATH
+
+echo $(pwd)
 ls -la
 
 
@@ -96,6 +104,7 @@ then
     echo " done"
 fi
 
+echo $(pwd)
 ls -la
 
 # optional: move source to named directory path
@@ -107,6 +116,7 @@ go_dir=$build
 #	cp -R $build/* $go_dir
 #fi
 
+echo $(pwd)
 ls -la
 
 
@@ -120,6 +130,7 @@ echo "-----> Running: go get -tags heroku ./..."
 cd $go_dir
 go get -tags heroku ./...
 
+echo $(pwd)
 ls -la
 
 
@@ -131,9 +142,11 @@ mkdir -p $build/bin
 mv $go_dir/* $build/bin
 #rm -rf $build/.heroku
 
+echo $(pwd)
 ls -la
 
 mkdir -p $build/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > $build/.profile.d/go.sh
 
+echo $(pwd)
 ls -la
