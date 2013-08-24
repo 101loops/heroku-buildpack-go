@@ -72,7 +72,7 @@ export GOROOT
 
 echo $GOROOT
 
-GOPATH=${GO_PATH:-$build/.heroku/g}
+GOPATH=${GO_PATH:-$build}
 export GOPATH
 
 echo $GOPATH
@@ -120,7 +120,6 @@ go_dir=$build
 echo $(pwd)
 ls -la
 
-ls $build/.heroku -la
 
 #--------------------------------------------------------------------
 # Compile!
