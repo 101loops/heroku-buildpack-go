@@ -9,13 +9,13 @@ ls -la
 
 
 #--------------------------------------------------------------------
-# Variables for use later
+# Variables
 #--------------------------------------------------------------------
 
 mkdir -p "$1" "$2"
 BUILD=$(cd "$1/" && pwd)
 CACHE=$(cd "$2/" && pwd)
-$BUILD_PACK=$(dirname $(dirname $0))
+$BUILDPACK=$(dirname $(dirname $0))
 
 # Go
 GO_VERSION=${GO_VERSION:-1.1.2}
@@ -34,7 +34,7 @@ PATH=$venv/bin:$PATH
 #--------------------------------------------------------------------
 
 virtualenv() {
-    python "$$BUILD_PACK/vendor/virtualenv-1.7/virtualenv.py" "$@"
+    python "$$BUILDPACK/vendor/virtualenv-1.7/virtualenv.py" "$@"
 }
 
 if test -e $BUILD/bin && ! test -d $BUILD/bin
