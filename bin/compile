@@ -60,6 +60,9 @@ else
     tar zxf ${GO_FILE}
     rm -f ${GO_FILE}
     echo " done"
+
+    echo $(pwd)
+    ls -la
 fi
 
 
