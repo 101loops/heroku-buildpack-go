@@ -141,6 +141,8 @@ if [ -n "${GODIR_NAME}" ]; then
 	mv ${GODIR}/* ${BUILD}/bin
 fi
 
+ls -la ${BUILD}/bin
+
 rm -rf ${BUILD}/.heroku
 
 mkdir -p ${BUILD}/.profile.d
