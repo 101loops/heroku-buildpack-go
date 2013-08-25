@@ -81,6 +81,8 @@ eval GOPATH=$GO_PATH
 echo $GOPATH
 export GOPATH
 
+GOCMD="${GO_CMD:-get}"
+
 echo $GOPATH
 
 PATH=$GOROOT/bin:$PATH
@@ -137,7 +139,7 @@ echo "-----> Running: go get -tags heroku ./..."
 cd $GO_DIR
 echo $(pwd)
 ls -la
-$GOROOT/go get -tags heroku ./...
+$GOROOT/go ${GOCMD} -tags heroku ./...
 
 echo $(pwd)
 ls -la
