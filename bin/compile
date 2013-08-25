@@ -4,9 +4,6 @@
 # fail fast
 set -eo pipefail
 
-echo $(pwd)
-ls -la
-
 
 #--------------------------------------------------------------------
 # Variables
@@ -60,9 +57,6 @@ else
     tar zxf ${GO_FILE}
     rm -f ${GO_FILE}
     echo " done"
-
-    echo $(pwd)
-    ls -la
 fi
 
 
@@ -73,27 +67,14 @@ fi
 GOROOT=$CACHE/go-${GO_VERSION}/go
 export GOROOT
 
-echo $GOROOT
-
 GO_PATH="${GO_PATH:-\$BUILD}"
-echo $GO_PATH
 eval GOPATH=$GO_PATH
-echo $GOPATH
 export GOPATH
 
 GOCMD="${GO_CMD:-get}"
 GOTAGS="${GO_TAGS:-heroku}"
 
-echo $GOPATH
-
 PATH=${GOROOT}/bin:$PATH
-
-echo $PATH
-
-ls -la ${GOROOT}/bin
-
-echo $(pwd)
-ls -la
 
 
 #--------------------------------------------------------------------
@@ -116,20 +97,14 @@ then
     echo " done"
 fi
 
-echo $(pwd)
-ls -la
-
 # optional: move source to named directory path
 GO_DIR=${BUILD}
-GO_DIR_NAME=${GO_DIR}
-if [[ -n "${GO_DIR_NAME}" ]]
+#GO_DIR_NAME=${GO_DIR}
+if [ -n "${GO_DIR_NAME}" ]; then
 	GO_DIR=${GO_DIR}/src/${GO_DIR_NAME}
 	mkdir -p ${GO_DIR}
 	cp -R ${BUILD}/* ${GO_DIR}
 fi
-
-echo $(pwd)
-ls -la
 
 
 #--------------------------------------------------------------------
