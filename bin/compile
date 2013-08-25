@@ -111,9 +111,9 @@ fi
 
 # optional: build custom directory in repository
 if [ -n "${GO_SRC}" ]; then
-	GOSRC=${BUILD}/${GO_SRC}
+	GOSRC=${GODIR}/${GO_SRC}
 else
-	GOSRC=${BUILD}
+	GOSRC=${GODIR}
 fi
 echo $GOSRC
 
@@ -132,18 +132,13 @@ cd $GOSRC
 go ${GOCMD} -tags ${GOTAGS} ./...
 echo "       done"
 
+mkdir -p ${BUILD}/bin
+mv ${$GOSRC}/* ${BUILD}/bin
+
 
 #--------------------------------------------------------------------
 # Finalisation and cleanup
 #--------------------------------------------------------------------
-
-if [ -n "${GODIR_NAME}" ]; then
-	mkdir -p ${BUILD}/bin
-	mv ${GODIR}/* ${BUILD}/bin
-fi
-
-ls -la ${BUILD}
-ls -la ${BUILD}/bin
 
 rm -rf ${BUILD}/.heroku
 
