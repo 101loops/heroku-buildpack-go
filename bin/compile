@@ -131,9 +131,6 @@ echo "       with path: $GOPATH"
 cd $GOSRC
 go ${GOCMD} -tags ${GOTAGS} ./...
 
-echo $(pwd)
-ls -la
-
 
 #--------------------------------------------------------------------
 # Finalisation and cleanup
@@ -148,6 +145,3 @@ rm -rf ${BUILD}/.heroku
 
 mkdir -p ${BUILD}/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > ${BUILD}/.profile.d/go.sh
-
-echo $(pwd)
-ls -la
