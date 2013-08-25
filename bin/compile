@@ -63,7 +63,6 @@ else
 
     echo $(pwd)
     ls -la
-    ls -la go
 fi
 
 
@@ -87,9 +86,11 @@ GOTAGS="${GO_TAGS:-heroku}"
 
 echo $GOPATH
 
-PATH=$GOROOT/bin:$PATH
+PATH=${GOROOT}/bin:$PATH
 
 echo $PATH
+
+ls -la ${GOROOT}/bin
 
 echo $(pwd)
 ls -la
@@ -119,13 +120,13 @@ echo $(pwd)
 ls -la
 
 # optional: move source to named directory path
-GO_DIR=$BUILD
-#GO_DIR_NAME=$(GO_DIR)
-#if [ -n "$GO_DIR_name" ]
-#	GO_DIR=GO_DIR/src/GO_DIR_NAME
-#	mkdir -p $GO_DIR
-#	cp -R $BUILD/* $GO_DIR
-#fi
+GO_DIR=${BUILD}
+GO_DIR_NAME=${GO_DIR}
+if [ -n "${GO_DIR_name}" ]
+	GO_DIR=${GO_DIR}/src/${GO_DIR_NAME}
+	mkdir -p ${GO_DIR}
+	cp -R ${BUILD}/* ${GO_DIR}
+fi
 
 echo $(pwd)
 ls -la
