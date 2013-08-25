@@ -109,6 +109,7 @@ else
 	GODIR=${BUILD}
 fi
 
+# optional: build custom directory in repository
 if [ -n "${GO_SRC}" ]; then
 	GOSRC=${BUILD}/${GO_SRC}
 else
