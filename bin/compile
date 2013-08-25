@@ -117,7 +117,7 @@ echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
 cd $GO_DIR
 echo $(pwd)
 ls -la
-$GOROOT/go ${GOCMD} -tags ${GOTAGS} ./...
+go ${GOCMD} -tags ${GOTAGS} ./...
 
 echo $(pwd)
 ls -la
