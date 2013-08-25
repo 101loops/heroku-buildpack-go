@@ -63,6 +63,7 @@ else
 
     echo $(pwd)
     ls -la
+    ls -la go
 fi
 
 
@@ -82,6 +83,7 @@ echo $GOPATH
 export GOPATH
 
 GOCMD="${GO_CMD:-get}"
+GOTAGS="${GO_TAGS:-heroku}"
 
 echo $GOPATH
 
@@ -135,11 +137,11 @@ ls -la
 
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
-echo "-----> Running: go get -tags heroku ./..."
+echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
 cd $GO_DIR
 echo $(pwd)
 ls -la
-$GOROOT/go ${GOCMD} -tags heroku ./...
+$GOROOT/go ${GOCMD} -tags ${GOTAGS} ./...
 
 echo $(pwd)
 ls -la
