@@ -133,7 +133,7 @@ go ${GOCMD} -tags ${GOTAGS} ./...
 echo "       done"
 
 mkdir -p ${BUILD}/bin
-mv ${$GOSRC}/* ${BUILD}/bin
+mv ${GOSRC}/* ${BUILD}/bin
 
 
 #--------------------------------------------------------------------
