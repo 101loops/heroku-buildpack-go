@@ -134,7 +134,6 @@ echo "       done"
 
 mkdir -p ${BUILD}/bin
 mv ${GOSRC}/* ${BUILD}/bin
-ls -la ${BUILD}/bin
 
 
 #--------------------------------------------------------------------
