@@ -98,16 +98,19 @@ then
 fi
 
 # optional: move source to named directory path
-GO_DIR_NAME=${GO_DIR}
-if [ -n "${GO_DIR_NAME}" ]; then
-	echo -n "-----> Copying source to src/${GO_DIR_NAME}"
-	GO_DIR=${BUILD}/src/${GO_DIR_NAME}
-	mkdir -p ${GO_DIR}
-	cp -R ${BUILD}/* ${GO_DIR}
+GODIR_NAME=${GO_DIR}
+if [ -n "${GODIR_NAME}" ]; then
+	echo -n "-----> Copying source to src/${GODIR_NAME}"
+	GODIR=${BUILD}/src/${GODIR_NAME}
+	mkdir -p ${GODIR}
+	cp -R ${BUILD}/* ${GODIR}
 	echo " done"
 else
-	GO_DIR=${BUILD}
+	GODIR=${BUILD}
 fi
+
+GOSRC=${GO_SRC}
+echo $GOSRC
 
 
 #--------------------------------------------------------------------
@@ -117,10 +120,10 @@ fi
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
 echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
-echo -n "       with GOPATH: $GO_PATH"
-cd $GO_DIR
-echo $(pwd)
-ls -la
+echo -n "       with directory: $GODIR"
+echo -n "       with source: $GOSRC"
+echo -n "       with path: $GOPATH"
+cd $GOSRC
 go ${GOCMD} -tags ${GOTAGS} ./...
 
 echo $(pwd)
@@ -132,7 +135,7 @@ ls -la
 #--------------------------------------------------------------------
 
 mkdir -p ${BUILD}/bin
-mv ${GO_DIR}/* ${BUILD}/bin
+mv ${GODIR}/* ${BUILD}/bin
 rm -rf ${BUILD}/.heroku
 
 mkdir -p ${BUILD}/.profile.d
