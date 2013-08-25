@@ -130,6 +130,7 @@ echo "       with source: $GOSRC"
 echo "       with path: $GOPATH"
 cd $GOSRC
 go ${GOCMD} -tags ${GOTAGS} ./...
+echo "       done"
 
 
 #--------------------------------------------------------------------
