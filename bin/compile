@@ -109,7 +109,11 @@ else
 	GODIR=${BUILD}
 fi
 
-GOSRC=${GO_SRC}
+if [ -n "${GO_SRC}" ]; then
+	GOSRC=${BUILD}/${GO_SRC}
+else
+	GOSRC=${BUILD}
+fi
 echo $GOSRC
 
 
