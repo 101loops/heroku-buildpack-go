@@ -98,14 +98,15 @@ then
 fi
 
 # optional: move source to named directory path
-GO_DIR=${BUILD}
 GO_DIR_NAME=${GO_DIR}
 if [ -n "${GO_DIR_NAME}" ]; then
 	echo -n "-----> Copying source to src/${GO_DIR_NAME}"
-	GO_DIR=${GO_DIR}/src/${GO_DIR_NAME}
+	GO_DIR=${BUILD}/src/${GO_DIR_NAME}
 	mkdir -p ${GO_DIR}
 	cp -R ${BUILD}/* ${GO_DIR}
 	echo " done"
+else
+	GO_DIR=${BUILD}
 fi
 
 
