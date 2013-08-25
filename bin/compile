@@ -141,6 +141,7 @@ if [ -n "${GODIR_NAME}" ]; then
 	mv ${GODIR}/* ${BUILD}/bin
 fi
 
+ls -la ${BUILD}
 ls -la ${BUILD}/bin
 
 rm -rf ${BUILD}/.heroku
