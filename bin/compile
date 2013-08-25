@@ -125,9 +125,9 @@ echo $GOSRC
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
 echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
-echo -n "       with directory: $GODIR"
-echo -n "       with source: $GOSRC"
-echo -n "       with path: $GOPATH"
+echo "       with directory: $GODIR"
+echo "       with source: $GOSRC"
+echo "       with path: $GOPATH"
 cd $GOSRC
 go ${GOCMD} -tags ${GOTAGS} ./...
 
@@ -139,8 +139,11 @@ ls -la
 # Move the binaries so we can use them
 #--------------------------------------------------------------------
 
-mkdir -p ${BUILD}/bin
-mv ${GODIR}/* ${BUILD}/bin
+if [ -n "${GODIR_NAME}" ]; then
+	mkdir -p ${BUILD}/bin
+	mv ${GODIR}/* ${BUILD}/bin
+fi
+
 rm -rf ${BUILD}/.heroku
 
 mkdir -p ${BUILD}/.profile.d
