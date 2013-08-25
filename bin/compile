@@ -122,7 +122,7 @@ ls -la
 # optional: move source to named directory path
 GO_DIR=${BUILD}
 GO_DIR_NAME=${GO_DIR}
-if [ -n "${GO_DIR_name}" ]
+if [[ -n "${GO_DIR_NAME}" ]]
 	GO_DIR=${GO_DIR}/src/${GO_DIR_NAME}
 	mkdir -p ${GO_DIR}
 	cp -R ${BUILD}/* ${GO_DIR}
@@ -152,15 +152,15 @@ ls -la
 # Move the binaries so we can use them
 #--------------------------------------------------------------------
 
-#mkdir -p $BUILD/bin
-#mv $GO_DIR/* $BUILD/bin
-#rm -rf $BUILD/.heroku
+mkdir -p ${BUILD}/bin
+mv ${GO_DIR}/* ${BUILD}/bin
+rm -rf ${BUILD}/.heroku
 
 #echo $(pwd)
 #ls -la
 
-mkdir -p $BUILD/.profile.d
-echo 'PATH=$PATH:$HOME/bin' > $BUILD/.profile.d/go.sh
+mkdir -p ${BUILD}/.profile.d
+echo 'PATH=$PATH:$HOME/bin' > ${BUILD}/.profile.d/go.sh
 
 echo $(pwd)
 ls -la
