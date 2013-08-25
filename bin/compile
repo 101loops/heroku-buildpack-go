@@ -116,6 +116,7 @@ fi
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
 echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
+echo -n "       with GOPATH: $GO_PATH"
 cd $GO_DIR
 echo $(pwd)
 ls -la
@@ -132,9 +133,6 @@ ls -la
 mkdir -p ${BUILD}/bin
 mv ${GO_DIR}/* ${BUILD}/bin
 rm -rf ${BUILD}/.heroku
-
-#echo $(pwd)
-#ls -la
 
 mkdir -p ${BUILD}/.profile.d
 echo 'PATH=$PATH:$HOME/bin' > ${BUILD}/.profile.d/go.sh
