@@ -117,6 +117,8 @@ else
 fi
 echo $GOSRC
 
+GOPKG=${GO_PKG:-./...}
+
 
 #--------------------------------------------------------------------
 # Compile!
@@ -124,12 +126,12 @@ echo $GOSRC
 
 unset GIT_DIR 	# unset git dir or it will mess with goinstall
 
-echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ./..."
+echo "-----> Running: go ${GOCMD} -tags ${GOTAGS} ${GOPKG}"
 echo "       with directory: $GODIR"
 echo "       with source: $GOSRC"
 echo "       with path: $GOPATH"
 cd $GOSRC
-go ${GOCMD} -tags ${GOTAGS} ./...
+go ${GOCMD} -tags ${GOTAGS} ${GOPKG}
 echo "       done"
 
 mkdir -p ${BUILD}/bin
