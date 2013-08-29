@@ -135,8 +135,8 @@ go ${GOCMD} -tags ${GOTAGS} ${GOPKG}
 echo "       done"
 
 mkdir -p ${BUILD}/bin
-mv ${GOSRC}/bin/* ${BUILD}/bin 			# copy binary
-cp -Rf ${GOSRC}/src/* ${BUILD}/bin 	# copy assets, config and template files
+mv -Rf ${GOSRC}/* ${BUILD}/bin 	# move source (incl. asset, config and template files) to bin
+mv ${GOSRC}/bin/* ${BUILD}/bin 	# move compiled binary to source
 
 
 #--------------------------------------------------------------------
