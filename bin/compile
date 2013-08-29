@@ -136,7 +136,7 @@ echo "       done"
 
 mkdir -p ${BUILD}/bin
 mv ${GOSRC}/bin/* ${BUILD}/bin 		# copy binary
-cp -Rf ${BUILD}/src ${BUILD}/bin 	# copy assets, config and template files
+cp -Rf ${GOSRC}/src ${BUILD}/bin 	# copy assets, config and template files
 
 
 #--------------------------------------------------------------------
