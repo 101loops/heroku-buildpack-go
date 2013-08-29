@@ -135,6 +135,7 @@ go ${GOCMD} -tags ${GOTAGS} ${GOPKG}
 echo "       done"
 
 mkdir -p ${BUILD}/bin
+mv ${GOSRC}/bin/* ${BUILD}/bin
 mv ${GOSRC}/* ${BUILD}/bin
 
 
